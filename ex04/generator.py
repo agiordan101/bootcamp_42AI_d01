@@ -1,12 +1,19 @@
 import numpy as np
-import random as rand
+import time
 
+def shuffle(input):
+    ret = []
+    while len(input):
+        i = int(time.time()) % len(input)
+        ret.append(input[i])
+        del input[i]
+    return ret
 
 def generator(text, sep=" ", option=None):
     if isinstance(text, str):
         words = text.split(sep)
         if option == "snuffle":
-            rand.shuffle(words)
+            words = shuffle(words)
         elif option == "unique":
             np.unique(words)
         elif option == "ordered":
@@ -18,5 +25,5 @@ def generator(text, sep=" ", option=None):
 
 
 text = "Le Lorem Ipsum est simplement du faux texte."
-for word in generator(text, sep=" ", option=""):
+for word in generator(text, sep=" ", option="snuffle"):
     print(word)
